@@ -13,9 +13,10 @@ class PostsController extends Controller
     {
         Posts::create([
             'title' => $request->title,
-            'content' => $request->Blog,
+            'content' => $request->content,
             'user_id' => $request->user_id,
             'category_id' => $request->category_id,
         ]);
+        return response()->json(['success' => 'Post created Successfully'], 200);
     }
 }
