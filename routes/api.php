@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'categories'], function ($route
     Route::get('/getcategories', [CategoriesController::class, 'getAllCategories']);
 });
 
-Route::group(['middleware' => 'api', 'prefix' => 'posts'], function ($router) {
-    Route::get('/createposts', [CategoriesController::class, 'createPosts']);
+Route::group(['middleware' => 'auth:api', 'prefix' => 'posts'], function ($router) {
+    Route::post('/createposts', [PostsController::class, 'createPosts']);
 });
