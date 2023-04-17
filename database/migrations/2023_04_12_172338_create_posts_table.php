@@ -21,6 +21,10 @@ class CreatePostsTable extends Migration
             $table->integer('categrory_id');
             $table->timestamps();
         });
+
+        Schema::table('likes', function (Blueprint $table) {
+            $table->foreign('post_id')->references('id')->on('posts');
+        });
     }
 
     /**
