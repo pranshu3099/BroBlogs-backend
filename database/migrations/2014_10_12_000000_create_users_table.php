@@ -26,6 +26,9 @@ class CreateUsersTable extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
+        Schema::table('likes', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
