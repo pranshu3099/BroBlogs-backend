@@ -35,3 +35,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'posts'], function ($route
 Route::group(['middleware' => 'api', 'prefix' => 'search'], function ($router) {
     Route::get('/searchuser', [UsersController::class, 'getusers']);
 });
+
+Route::group(['middleware' => 'api', 'prefix' => 'posts'], function ($router) {
+    Route::get('/getposts', [PostsController::class, 'getHomePost']);
+});
