@@ -19,6 +19,12 @@ class CreateCategoriesTable extends Migration
             $table->string('category_name');
             $table->timestamps();
         });
+        Schema::table('likes', function (Blueprint $table) {
+            $table->foreign('category_id')->references('slug')->on('categories');
+        });
+        Schema::table('posts', function (Blueprint $table) {
+            $table->foreign('category_id')->references('slug')->on('categories');
+        });
     }
 
     /**
