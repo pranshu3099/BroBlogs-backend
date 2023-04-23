@@ -23,7 +23,7 @@ class CreatePostsTable extends Migration
         });
 
         Schema::table('likes', function (Blueprint $table) {
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('post_id')->on('posts');
         });
     }
 
