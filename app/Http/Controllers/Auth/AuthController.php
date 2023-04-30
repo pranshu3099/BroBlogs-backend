@@ -61,7 +61,7 @@ class AuthController extends Controller
             $this->responseHttpcodes = GET;
             $this->status = true;
             $this->info = CREATED_SUCCESS;
-            $this->data = User::generateToken();
+            // $this->data = User::generateToken();
         } catch (\Exception $e) {
             $this->responseHttpcodes = INTERNAL_SERVER_ERROR;
             $this->info = EXCEPTION_ERROR;
