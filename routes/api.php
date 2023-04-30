@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 
@@ -38,4 +39,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'search'], function ($router) {
 
 Route::group(['middleware' => 'api', 'prefix' => 'posts'], function ($router) {
     Route::get('/getposts', [PostsController::class, 'getHomePost']);
+});
+
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'likeposts'], function ($router) {
+    Route::post('/likes', [LikesController::class, 'AddremoveLikes']);
 });
