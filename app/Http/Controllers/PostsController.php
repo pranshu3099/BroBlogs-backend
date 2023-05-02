@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Likes;
 use App\Models\Posts;
-use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -34,13 +35,12 @@ class PostsController extends Controller
     public function getHomePost()
     {
         $results = Posts::with(['user' => function ($query) {
-            $query->select('name', 'id');
+            $query->select('name');
         }])
-            ->where('post_id', 3805)
-            ->first()
-            ->toArray();
-        $likes_count = Likes::where('post_id', $results['post_id'])->first('count')->toArray();
-        $results = array_merge($results, $likes_count);
-        return response()->json([$results], 200);
+            ->join('likes', 'likes.post_id', '=', 'posts.post_id')
+            ->join('users', 'users.id', '=', 'posts.user_id') // Add this join clause
+            ->select('posts.*', 'users.name', 'likes.count')
+            ->get()->toArray();
+        return response()->json($results, 200);
     }
 }
