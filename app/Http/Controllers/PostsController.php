@@ -32,15 +32,19 @@ class PostsController extends Controller
         }
     }
 
-    public function getHomePost()
+    public function getHomePost(Request $request)
     {
         $results = Posts::with(['user' => function ($query) {
             $query->select('name');
         }])
             ->join('likes', 'likes.post_id', '=', 'posts.post_id')
             ->join('users', 'users.id', '=', 'posts.user_id') // Add this join clause
-            ->select('posts.*', 'users.name', 'likes.count')
+            ->select('posts.title', 'posts.category_id', 'posts.post_id', 'posts.content', 'users.name', 'likes.count')
             ->get()->toArray();
+        $results =  array_map(function ($item) {
+            $item['user_id'] = 42;
+            return $item;
+        }, $results);
         return response()->json($results, 200);
     }
 }
