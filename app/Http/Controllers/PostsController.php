@@ -41,8 +41,9 @@ class PostsController extends Controller
             ->join('users', 'users.id', '=', 'posts.user_id') // Add this join clause
             ->select('posts.title', 'posts.category_id', 'posts.post_id', 'posts.content', 'users.name', 'likes.count')
             ->get()->toArray();
-        $results =  array_map(function ($item) {
-            $item['user_id'] = 42;
+        $user_id = $request->user()->id;
+        $results =  array_map(function ($item) use ($user_id) {
+            $item['user_id'] = $user_id;
             return $item;
         }, $results);
         return response()->json($results, 200);
