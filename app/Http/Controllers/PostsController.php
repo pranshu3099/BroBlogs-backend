@@ -48,4 +48,22 @@ class PostsController extends Controller
         }, $results);
         return response()->json($results, 200);
     }
+
+    public function getUserPost(Request $request)
+    {
+        $user_id = $request->user()->id;
+        $results = Posts::with(['user' => function ($query) {
+            $query->select('name');
+        }])
+            ->join('likes', 'likes.post_id', '=', 'posts.post_id')
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->where('users.id', $user_id) // Add this join clause
+            ->select('posts.title', 'posts.category_id', 'posts.post_id', 'posts.content', 'users.name', 'likes.count')
+            ->get()->toArray();
+        $results =  array_map(function ($item) use ($user_id) {
+            $item['user_id'] = $user_id;
+            return $item;
+        }, $results);
+        return response()->json($results, 200);
+    }
 }
