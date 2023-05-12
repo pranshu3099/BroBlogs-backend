@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
@@ -40,6 +41,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'search'], function ($router) {
 Route::group(['middleware' => 'api', 'prefix' => 'posts'], function ($router) {
     Route::get('/getposts', [PostsController::class, 'getHomePost']);
     Route::get('/userposts', [PostsController::class, 'getUserPost']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'comments'], function ($router) {
+    Route::post('/create', [CommentController::class, 'create']);
 });
 
 
