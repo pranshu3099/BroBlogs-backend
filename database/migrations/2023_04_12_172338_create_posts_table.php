@@ -25,6 +25,10 @@ class CreatePostsTable extends Migration
         Schema::table('likes', function (Blueprint $table) {
             $table->foreign('post_id')->references('post_id')->on('posts');
         });
+
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('posts_id')->references('post_id')->on('posts');
+        });
     }
 
     /**
