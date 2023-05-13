@@ -41,10 +41,12 @@ Route::group(['middleware' => 'api', 'prefix' => 'search'], function ($router) {
 Route::group(['middleware' => 'api', 'prefix' => 'posts'], function ($router) {
     Route::get('/getposts', [PostsController::class, 'getHomePost']);
     Route::get('/userposts', [PostsController::class, 'getUserPost']);
+    Route::get('/getsinglepost/{id}', [PostsController::class, 'getSinglePost']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'comments'], function ($router) {
     Route::post('/create', [CommentController::class, 'create']);
+    Route::get('/getcomments/{id}', [CommentController::class, 'getcomments']);
 });
 
 
