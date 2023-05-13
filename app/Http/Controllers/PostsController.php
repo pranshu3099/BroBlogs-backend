@@ -66,4 +66,21 @@ class PostsController extends Controller
         }, $results);
         return response()->json($results, 200);
     }
+
+    public function getSinglePost(Request $request, $id)
+    {
+        $user_id = $request->user()->id;
+        $results = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->join('likes', 'likes.post_id', '=', 'posts.post_id')
+            ->where('posts.post_id', $id)
+            ->select('posts.title', 'posts.category_id', 'posts.post_id', 'posts.content', 'users.name', 'users.email', 'users.created_at', 'likes.count')
+            ->get()
+            ->toArray();
+        $results =  array_map(function ($item) use ($user_id) {
+            $item->user_id = $user_id;
+            return $item;
+        }, $results);
+        return response()->json($results, 200);
+    }
 }
